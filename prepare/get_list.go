@@ -5,6 +5,10 @@ import (
 	"fmt"
 )
 
+/*
+*
+验证List双向队列数据结构
+*/
 func main() {
 	ll := list.New()
 	ll2 := list.List{}
