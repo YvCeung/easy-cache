@@ -1,6 +1,6 @@
 # FastCache
 
-**FastCache** 是一个基于 [极客兔兔分布式缓存](https://geektutu.com/post/geek-cache.html) 改造而来的项目，相较于原版，做了多项增强和拓展优化。旨在提升整体性能的同时，也兼顾架构设计与面试讨论价值。
+**FastCache** 是一个基于 [极客兔兔分布式缓存](https://geektutu.com/post/geek-cache.html) 改造而来的项目，相较于原版，做了多项增强和拓展优化。旨在提升整体性能的同时，也兼顾架构设计。
 
 ## 🔧 相比原项目新增的特性
 
