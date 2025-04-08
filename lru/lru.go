@@ -19,8 +19,7 @@ type entry struct {
 	value Value
 }
 
-// 构造函数
-func (cache *Cache) New(maxBytes int64, onEvicted func(string, Value)) *Cache {
+func New(maxBytes int64, onEvicted func(string, Value)) *Cache {
 	return &Cache{
 		maxBytes:  maxBytes,
 		nBytes:    0,
