@@ -39,7 +39,7 @@ func (c *Cache) Add(key string, v Value) {
 	} else {
 		element := c.ll.PushFront(&entry{key: key, value: v})
 		c.cache[key] = element
-		c.nBytes += int64(v.Len())
+		c.nBytes += int64(v.Len()) + int64(len(key))
 	}
 
 	for c.maxBytes > 0 && c.maxBytes < c.nBytes {
