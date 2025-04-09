@@ -32,6 +32,7 @@ func New(maxBytes int64, onEvicted func(string, Value)) *Cache {
 // 增加或修改元素
 func (c *Cache) Add(key string, v Value) {
 	if ele, ok := c.cache[key]; ok {
+		// List是一个双向链表，在双向链表中队头队尾是相对的，这里把头部当成尾部
 		c.ll.MoveToFront(ele)
 		kv := ele.Value.(*entry)
 		c.nBytes += int64(v.Len()) - int64(kv.value.Len())
@@ -68,7 +69,7 @@ func (c *Cache) RemoveOldest() {
 		//清空字典
 		delete(c.cache, kv.key)
 
-		//更新容量
+		//更新容量  减去kv所占的内存
 		c.nBytes -= int64(len(kv.key)) + int64(kv.value.Len())
 
 		//执行回调
@@ -76,4 +77,8 @@ func (c *Cache) RemoveOldest() {
 			c.OnEvicted(kv.key, kv.value)
 		}
 	}
+}
+
+func (c *Cache) Len() int {
+	return c.ll.Len()
 }
