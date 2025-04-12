@@ -7,7 +7,8 @@ import (
 )
 
 type Group struct {
-	name      string
+	name string
+	//回调函数
 	getter    Getter
 	mainCache cache
 }
@@ -16,8 +17,10 @@ type Getter interface {
 	Get(key string) ([]byte, error)
 }
 
+// 自定义一个函数类型
 type GetterFunc func(key string) ([]byte, error)
 
+// 实现了Getter接口的函数 (接口型函数) 然后调用自己，常用作回调函数
 func (g GetterFunc) Get(key string) ([]byte, error) {
 	return g(key)
 }
@@ -60,7 +63,7 @@ func (g *Group) Get(key string) (ByteView, error) {
 	}
 
 	if v, ok := g.mainCache.get(key); ok {
-		log.Println("[GeeCache] hit")
+		log.Println("[FastCache] hit")
 		return v, nil
 	}
 
@@ -78,6 +81,8 @@ func (g *Group) getLocally(key string) (ByteView, error) {
 
 	}
 	value := ByteView{b: cloneBytes(bytes)}
+
+	//放入缓存
 	g.populateCache(key, value)
 	return value, nil
 }

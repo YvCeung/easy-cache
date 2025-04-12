@@ -5,6 +5,8 @@ import (
 	"sync"
 )
 
+// 封装了lru,在lru的基础上增加了并发属性
+
 type cache struct {
 	mu         sync.Mutex
 	lru        *lru.Cache

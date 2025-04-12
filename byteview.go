@@ -1,9 +1,15 @@
 package FastCache
 
+/*
+用来封装一个只读的缓存值
+这个 ByteView 是一个只读视图，它把缓存数据封装起来，防止外部修改，
+同时提供基本的操作接口（长度、转字符串、复制）
+*/
 type ByteView struct {
 	b []byte
 }
 
+// 实现了Value接口
 func (v ByteView) Len() int {
 	return len(v.b)
 }
