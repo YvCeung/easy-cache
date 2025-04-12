@@ -50,7 +50,6 @@ func TestRemoveOldest(t *testing.T) {
 }
 
 /*
-*
 测试 LRU 缓存中，当触发淘汰策略时，是否会正确地调用传入的回调函数 OnEvicted 并记录被淘汰的键。
 */
 func TestOnEvicted(t *testing.T) {
