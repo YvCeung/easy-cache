@@ -3,7 +3,7 @@
   <component name="SonarLintProjectSettings">
     <option name="moduleMapping">
       <map>
-        <entry key="easycache" value="FastCache" />
+        <entry key="easy-cache" value="FastCache" />
       </map>
     </option>
   </component>
