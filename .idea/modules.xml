@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/FastCache.iml" filepath="$PROJECT_DIR$/.idea/FastCache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/easycache.iml" filepath="$PROJECT_DIR$/.idea/easycache.iml" />
     </modules>
   </component>
 </project>

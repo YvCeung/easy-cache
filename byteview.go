@@ -1,4 +1,4 @@
-package FastCache
+package easycache
 
 /*
 用来封装一个只读的缓存值

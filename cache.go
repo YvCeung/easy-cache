@@ -1,4 +1,4 @@
-package FastCache
+package easycache
 
 import (
 	"github.com/YvCeung/FastCache/lru"
