@@ -1,4 +1,4 @@
-package easycache
+package cache
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ type Group struct {
 	name string
 	//回调函数
 	getter    Getter
-	mainCache cache
+	mainCache concurrentcache
 }
 
 type Getter interface {
@@ -41,7 +41,7 @@ func NewGroup(name string, cacheBytes int64, getter Getter) *Group {
 	g := &Group{
 		name:   name,
 		getter: getter,
-		mainCache: cache{
+		mainCache: concurrentcache{
 			cacheBytes: cacheBytes,
 		},
 	}

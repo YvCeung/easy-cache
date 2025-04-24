@@ -9,6 +9,7 @@ import (
 const defaultBasePath = "/_easycache/"
 
 type HTTPPool struct {
+	//用于标记当前节点的网络地址 eg:http://xxxx:8080
 	self     string
 	basePath string
 }

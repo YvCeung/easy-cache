@@ -1,19 +1,19 @@
-package easycache
+package cache
 
 import (
-	"github.com/YvCeung/FastCache/lru"
+	"github.com/YvCeung/easy-cache/package/lru"
 	"sync"
 )
 
 // 封装了lru,在lru的基础上增加了并发属性
 
-type cache struct {
+type concurrentcache struct {
 	mu         sync.Mutex
 	lru        *lru.Cache
 	cacheBytes int64
 }
 
-func (c *cache) add(key string, value ByteView) {
+func (c *concurrentcache) add(key string, value ByteView) {
 	// 先上锁
 	c.mu.Lock()
 
@@ -24,7 +24,7 @@ func (c *cache) add(key string, value ByteView) {
 	}
 }
 
-func (c *cache) get(key string) (value ByteView, ok bool) {
+func (c *concurrentcache) get(key string) (value ByteView, ok bool) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	if c.lru == nil {
