@@ -1,7 +1,7 @@
 package cache
 
 import (
-	"github.com/YvCeung/easy-cache/package/lru"
+	"github.com/YvCeung/easy-cache/package/outalg/lru"
 	"sync"
 )
 
