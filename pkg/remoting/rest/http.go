@@ -4,8 +4,10 @@ package rest
 import (
 	"fmt"
 	"github.com/YvCeung/easy-cache/pkg/cache"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -66,4 +68,27 @@ func (httpPool *HttpPool) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/octet-stream")
 	w.Write(view.ByteSlice())
 
+}
+
+// 相当于是客户端，提供一个从服务端获取数据的能力
+type httpGetter struct {
+	baseURL string
+}
+
+func (h *httpGetter) Get(group string, key string) ([]byte, error) {
+	requestPath := fmt.Sprintf("%v%v/%v", h.baseURL, url.QueryEscape(group), url.QueryEscape(key))
+	resp, err := http.Get(requestPath)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("Server returned: %v", resp.Status)
+	}
+
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("read responsebody error: %v", err)
+	}
+	return data, nil
 }
