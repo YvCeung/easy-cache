@@ -3,7 +3,7 @@ package rest
 
 import (
 	"fmt"
-	"github.com/YvCeung/easy-cache/package/cache"
+	"github.com/YvCeung/easy-cache/pkg/cache"
 	"log"
 	"net/http"
 	"strings"
