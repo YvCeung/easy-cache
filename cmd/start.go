@@ -48,7 +48,7 @@ func main() {
 
 }
 
-//启动cache服务
+// 启动cache服务
 func startCacheServer(serverPort string, serverAddrs []string, group *cache.Group) {
 	httpPool := rest.NewHttpPool(serverPort)
 	httpPool.Set(serverAddrs...)
