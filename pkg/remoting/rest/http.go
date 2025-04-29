@@ -122,7 +122,7 @@ func (httpPool *HttpPool) PickPeer(key string) (multinode.PeerGetter, bool) {
 	return nil, false
 }
 
-//还需要提供一个初始化HttpPool里面一致性哈希算法以及node跟Getter之间映射关系等数据的方法
+// 还需要提供一个初始化HttpPool里面一致性哈希算法以及node跟Getter之间映射关系等数据的方法
 func (httpPool *HttpPool) Set(nodes ...string) {
 	httpPool.mu.Lock()
 	defer httpPool.mu.Unlock()

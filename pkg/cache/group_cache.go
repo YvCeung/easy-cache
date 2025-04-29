@@ -2,6 +2,7 @@ package cache
 
 import (
 	"fmt"
+	"github.com/YvCeung/easy-cache/pkg/multinode"
 	"log"
 	"sync"
 )
@@ -11,6 +12,9 @@ type Group struct {
 	//回调函数
 	getter    Getter
 	mainCache concurrentcache
+
+	//集成多节点的能力
+	peerPicker multinode.PeerPicker
 }
 
 type Getter interface {
@@ -71,6 +75,17 @@ func (g *Group) Get(key string) (ByteView, error) {
 }
 
 func (g *Group) load(key string) (value ByteView, err error) {
+	if g.peerPicker != nil {
+		if peer, ok := g.peerPicker.PickPeer(key); ok {
+			data, err := g.getFromPeer(peer, key)
+			if err == nil {
+				return data, nil
+			}
+			//从别的节点没有获取到数据
+			log.Println("[easycache] Failed to get from peer ", peer)
+		}
+	}
+	//走本地
 	return g.getLocally(key)
 }
 
@@ -89,4 +104,20 @@ func (g *Group) getLocally(key string) (ByteView, error) {
 
 func (g *Group) populateCache(key string, value ByteView) {
 	g.mainCache.add(key, value)
+}
+
+func (g *Group) RegisterPeerPicker(peerPicker multinode.PeerPicker) {
+	if g.peerPicker != nil {
+		panic("RegisterPeerPicker calles more than once")
+	}
+	g.peerPicker = peerPicker
+}
+
+func (g *Group) getFromPeer(peerGetter multinode.PeerGetter, key string) (ByteView, error) {
+	data, err := peerGetter.Get(g.name, key)
+
+	if err != nil {
+		return ByteView{}, nil
+	}
+	return ByteView{b: data}, nil
 }
